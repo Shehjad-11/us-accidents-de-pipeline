@@ -1,0 +1,5 @@
+data/
+venv/
+*.parquet
+*.crc
+.env
