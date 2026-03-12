@@ -1,5 +1,16 @@
+# Ignore dataset
 data/
+
+# Ignore virtual environment
 venv/
-*.parquet
-*.crc
+
+# Ignore environment variables
 .env
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore Spark temp files
+*.crc
+*.parquet
