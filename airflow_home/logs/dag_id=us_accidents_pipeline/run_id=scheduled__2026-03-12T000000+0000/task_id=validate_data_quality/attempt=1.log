@@ -1,0 +1,19 @@
+[2026-03-13T03:18:57.198+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-03-13T03:18:57.235+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: us_accidents_pipeline.validate_data_quality scheduled__2026-03-12T00:00:00+00:00 [queued]>
+[2026-03-13T03:18:57.245+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: us_accidents_pipeline.validate_data_quality scheduled__2026-03-12T00:00:00+00:00 [queued]>
+[2026-03-13T03:18:57.246+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 3
+[2026-03-13T03:18:57.267+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): validate_data_quality> on 2026-03-12 00:00:00+00:00
+[2026-03-13T03:18:57.276+0000] {standard_task_runner.py:64} INFO - Started process 144 to run task
+[2026-03-13T03:18:57.280+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'us_accidents_pipeline', 'validate_data_quality', 'scheduled__2026-03-12T00:00:00+00:00', '--job-id', '27', '--raw', '--subdir', 'DAGS_FOLDER/accidents_pipeline_dag.py', '--cfg-path', '/tmp/tmp_i_lrzva']
+[2026-03-13T03:18:57.284+0000] {standard_task_runner.py:91} INFO - Job 27: Subtask validate_data_quality
+[2026-03-13T03:18:57.374+0000] {task_command.py:426} INFO - Running <TaskInstance: us_accidents_pipeline.validate_data_quality scheduled__2026-03-12T00:00:00+00:00 [running]> on host 08f01f514ac3
+[2026-03-13T03:18:57.477+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineer' AIRFLOW_CTX_DAG_ID='us_accidents_pipeline' AIRFLOW_CTX_TASK_ID='validate_data_quality' AIRFLOW_CTX_EXECUTION_DATE='2026-03-12T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-03-12T00:00:00+00:00'
+[2026-03-13T03:18:57.479+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-03-13T03:18:58.800+0000] {accidents_pipeline_dag.py:68} WARNING - High null percentage detected: 100.00%
+[2026-03-13T03:18:58.802+0000] {accidents_pipeline_dag.py:70} INFO - Records after cleaning: 100000
+[2026-03-13T03:18:58.815+0000] {python.py:237} INFO - Done. Returned value was: None
+[2026-03-13T03:18:58.816+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-03-13T03:18:58.823+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=us_accidents_pipeline, task_id=validate_data_quality, run_id=scheduled__2026-03-12T00:00:00+00:00, execution_date=20260312T000000, start_date=20260313T031857, end_date=20260313T031858
+[2026-03-13T03:18:58.903+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 0
+[2026-03-13T03:18:58.932+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-03-13T03:18:58.945+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

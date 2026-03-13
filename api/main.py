@@ -22,27 +22,43 @@ app = FastAPI(
 async def startup():
     global df, model
 
-    # Get database URL from environment (Render)
+    df = pd.DataFrame()
+    model = None
+
     DATABASE_URL = os.getenv("DATABASE_URL")
 
     if not DATABASE_URL:
-        raise RuntimeError("DATABASE_URL environment variable not set")
+        print("❌ DATABASE_URL environment variable not set")
+        return
 
-    # Connect to Supabase
-    engine = create_engine(DATABASE_URL)
+    try:
+        print("🔌 Connecting to Supabase...")
 
-    print("🔌 Connecting to Supabase...")
+        engine = create_engine(
+            DATABASE_URL,
+            pool_pre_ping=True
+        )
 
-    # Load dataset from cloud database
-    df = pd.read_sql("SELECT * FROM accidents_cleaned", engine)
+        df = pd.read_sql("SELECT * FROM accidents_cleaned", engine)
 
-    print(f"✅ Loaded {len(df):,} records from Supabase")
+        print(f"✅ Loaded {len(df):,} records from Supabase")
 
-    # Load ML model
-    model_path = "ml/models/xgboost_severity.pkl"
-    model = joblib.load(model_path) if os.path.exists(model_path) else None
+    except Exception as e:
+        print("❌ Database connection failed")
+        print(e)
 
-    print(f"✅ Model loaded: {model is not None}")
+    try:
+        model_path = "ml/models/xgboost_severity.pkl"
+
+        if os.path.exists(model_path):
+            model = joblib.load(model_path)
+            print("✅ Model loaded successfully")
+        else:
+            print("⚠️ Model file not found")
+
+    except Exception as e:
+        print("❌ Model loading failed")
+        print(e)
 
 
 # ── Request Schema ─────────────────────────────────────
@@ -73,7 +89,7 @@ class PredictionRequest(BaseModel):
 def health():
     return {
         "status": "healthy",
-        "records": int(len(df)),
+        "records": int(len(df)) if not df.empty else 0,
         "model_loaded": model is not None,
         "version": "1.0.0"
     }
