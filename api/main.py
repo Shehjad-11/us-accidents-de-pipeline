@@ -1,5 +1,5 @@
 """
-Phase 7–8 — FastAPI + Supabase
+Phase 7–8 — FastAPI + Railway PostgreSQL
 US Accidents REST API
 """
 
@@ -17,13 +17,16 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# Global objects
+df = pd.DataFrame()
+model = None
+engine = None
+
+
 # ── Load Data & Model ──────────────────────────────────
 @app.on_event("startup")
 async def startup():
-    global df, model
-
-    df = pd.DataFrame()
-    model = None
+    global df, model, engine
 
     DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -32,7 +35,7 @@ async def startup():
         return
 
     try:
-        print("🔌 Connecting to Supabase...")
+        print("🔌 Connecting to Railway PostgreSQL...")
 
         engine = create_engine(
             DATABASE_URL,
@@ -41,7 +44,7 @@ async def startup():
 
         df = pd.read_sql("SELECT * FROM accidents_cleaned", engine)
 
-        print(f"✅ Loaded {len(df):,} records from Supabase")
+        print(f"✅ Loaded {len(df):,} records from Railway DB")
 
     except Exception as e:
         print("❌ Database connection failed")
